@@ -39,6 +39,9 @@
               <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
+               <a class="nav-link js-scroll-trigger" href="#poll">Music Poll</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
             </li>
           </ul>
@@ -74,6 +77,27 @@
             <p>Here's a selection of the music we play at Station to Station:</p>
             <p>Bowie // 60s girl groups // (Northern) Soul // Velvet Underground // Patti Smith // Stooges // The Smiths // Joy Division // The Cure // Madchester // Britpop // Future Islands and many more</p>
             <p>Next Station To Station: 17.03.2018 // 22:00 // Club-U</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Music Poll -->
+
+    <section id="poll" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Music Poll</h2>
+            <p>Because our DJ is getting so many song requests at Station to Station nights, we figured we could give you the option to pick and vote for your favourite song before the next Station.</p>
+            <p>Below you can vote for your favourite song from a list that our DJ carefully picked. The top three will definitely be played at the upcoming Station to Station night.</p>
+            <p>Should your favourite song not be included on the list, feel free to enter your own favourite, which we will consider for future music polls</p>
+            <form method="post" action="/result">
+              <input placeholder="Title" name="song_name">
+              <input placeholder="Artist" name="some_artist">
+              <button type="submit">Send</button>
+            </form>
           </div>
         </div>
       </div>

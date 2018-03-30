@@ -37,9 +37,9 @@ class MainHandler(BaseHandler):
 class ResultHandler(BaseHandler):
     def post(self):
         result = self.request.get("some_text")
-        author = self.request.get("some_author")
+        artist = self.request.get("some_artist")
 
-        msg = model.Message(message_text=result, author=author)
+        msg = model.Message(song_name=result, artist=artist)
         msg.put()
 
         return self.redirect_to("message_list")
@@ -65,7 +65,7 @@ class EditMessageHandler(BaseHandler):
     def post(self, message_id):
         new_text = self.request.get("some_text")
         message = model.Message.get_by_id(int(message_id))
-        message.message_text = new_text
+        message.song_name = new_text
         message.put()
         return self.redirect_to("msg-list")
 
