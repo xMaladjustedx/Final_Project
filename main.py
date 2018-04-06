@@ -56,21 +56,34 @@ class MessageDetailsHandler(BaseHandler):
         params = {"message": message}
         return self.render_template("message_details.html", params=params)
 
+class ErrorSiteHandler(BaseHandler):
+    def get(self,):
+        return self.render_template("error_site.html")
 
 class PollHandler(BaseHandler):
     def post(self):
         band = self.request.get("band")
+        ip_address = self.request.remote_addr
 
-        msg = model.Poll(band=band)
-        msg.put()
+        polls = model.Poll.query(model.Poll.ip_address == ip_address).fetch()
 
-        return self.redirect_to("message_list")
+        if polls:
+            return self.redirect_to("error_site")
+
+        else:
+            msg = model.Poll(band=band, ip_address=ip_address)
+            msg.put()
+
+            polls = model.Poll.query().fetch()
+            params = {"polls": polls}
+            return self.render_template("poll_result.html", params=params)
 
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/result', ResultHandler),
     webapp2.Route('/poll-result', PollHandler, name="poll_result"),
+    webapp2.Route('/error-site', ErrorSiteHandler, name="error_site"),
     webapp2.Route('/message-list', MessageListHandler, name="message_list"),
     webapp2.Route('/message-list', MessageListHandler, name="msg-list"),
 ], debug=True)

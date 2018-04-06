@@ -9,6 +9,7 @@ class Message(ndb.Model):
 
 class Poll(ndb.Model):
     band = ndb.StringProperty()
+    ip_address = ndb.StringProperty()
 
 
 
