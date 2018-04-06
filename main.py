@@ -31,15 +31,15 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        return self.render_template("hello.html")
+        return self.render_template("index.html")
 
 
 class ResultHandler(BaseHandler):
     def post(self):
-        result = self.request.get("some_text")
+        song_name = self.request.get("song_name")
         artist = self.request.get("some_artist")
 
-        msg = model.Message(song_name=result, artist=artist)
+        msg = model.Message(song_name=song_name, artist=artist)
         msg.put()
 
         return self.redirect_to("message_list")
@@ -56,39 +56,13 @@ class MessageDetailsHandler(BaseHandler):
         params = {"message": message}
         return self.render_template("message_details.html", params=params)
 
-class EditMessageHandler(BaseHandler):
-    def get(self, message_id):
-        message = model.Message.get_by_id(int(message_id))
-        params = {"message": message}
-        return self.render_template("message_edit.html", params=params)
-
-    def post(self, message_id):
-        new_text = self.request.get("some_text")
-        message = model.Message.get_by_id(int(message_id))
-        message.song_name = new_text
-        message.put()
-        return self.redirect_to("msg-list")
-
-class DeleteMessageHandler(BaseHandler):
-    def get(self, message_id):
-        message = model.Message.get_by_id(int(message_id))
-        params = {"message": message}
-        return self.render_template("message_delete.html", params=params)
-
-    def post(self, message_id):
-        message = model.Message.get_by_id(int(message_id))
-        message.deleted = True
-        message.put()
-        return self.redirect_to("msg-list")
-
-
+class VoteResultHandler(BaseHandler):
+    def
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/result', ResultHandler),
+    webapp2.Route('/vote_result', VoteResultHandler),
     webapp2.Route('/message-list', MessageListHandler, name="message_list"),
     webapp2.Route('/message-list', MessageListHandler, name="msg-list"),
-    webapp2.Route('/message-detail/<message_id:\d+>', MessageDetailsHandler),
-    webapp2.Route('/message/<message_id:\d+>/edit', EditMessageHandler),
-    webapp2.Route('/message/<message_id:\d+>/delete', DeleteMessageHandler),
 ], debug=True)
