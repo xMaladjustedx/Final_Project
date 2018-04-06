@@ -56,13 +56,21 @@ class MessageDetailsHandler(BaseHandler):
         params = {"message": message}
         return self.render_template("message_details.html", params=params)
 
-class VoteResultHandler(BaseHandler):
-    def
+
+class PollHandler(BaseHandler):
+    def post(self):
+        band = self.request.get("band")
+
+        msg = model.Poll(band=band)
+        msg.put()
+
+        return self.redirect_to("message_list")
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/result', ResultHandler),
-    webapp2.Route('/vote_result', VoteResultHandler),
+    webapp2.Route('/poll-result', PollHandler, name="poll_result"),
     webapp2.Route('/message-list', MessageListHandler, name="message_list"),
     webapp2.Route('/message-list', MessageListHandler, name="msg-list"),
 ], debug=True)

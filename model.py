@@ -7,5 +7,8 @@ class Message(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
 
+class Poll(ndb.Model):
+    band = ndb.StringProperty()
+
 
 
